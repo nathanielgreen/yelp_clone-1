@@ -34,6 +34,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'haml'
 
+gem 'devise'
+
 group :test do
   gem 'rspec-collection_matchers'
 end
