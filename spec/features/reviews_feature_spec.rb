@@ -28,6 +28,15 @@ feature 'reviewing' do
     click_button 'Leave Review'
     expect(page).not_to have_content('bad')
   end
+
+  scenario 'reviews can be deleted' do
+    click_link 'Review KFC'
+    fill_in "Thoughts", with: "bad"
+    select '2', from: 'Rating'
+    click_button 'Leave Review'
+    click_link 'Delete review'
+    expect(page).not_to have_content('bad')
+  end
 end
 
 describe 'reviews' do

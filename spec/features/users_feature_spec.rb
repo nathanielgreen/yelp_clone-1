@@ -52,7 +52,21 @@ feature "User can sign in and out" do
   	sign_up(email: 'alice@example.com')
   	expect(page).not_to have_content('Delete KFC')
   end
+
+  it "user can delete only their own reviews" do
+  	sign_up
+  	click_link('Add a restaurant')
+  	fill_in 'Name', with: 'KFC'
+  	click_button 'Create Restaurant'
+		click_link 'Review KFC'
+		fill_in "Thoughts", with: "so so"
+		select '3', from: 'Rating'
+		click_button 'Leave Review'
+		click_link 'Sign out'
+		expect(page).not_to have_content('Delete review')
+  end
 end
+
 
 def sign_up(email: 'test@example.com', password: '12345678', password_confirmation: '12345678')
 	visit('/')
