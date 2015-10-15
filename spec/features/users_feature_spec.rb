@@ -42,4 +42,23 @@ feature "User can sign in and out" do
       expect(current_path).to eq '/users/sign_in'
     end
   end
+
+  it "users cannot delete restaurants they did not create" do
+  	sign_up
+  	click_link('Add a restaurant')
+  	fill_in 'Name', with: 'KFC'
+  	click_button 'Create Restaurant'
+  	click_link('Sign out')
+  	sign_up(email: 'alice@example.com')
+  	expect(page).not_to have_content('Delete KFC')
+  end
 end
+
+def sign_up(email: 'test@example.com', password: '12345678', password_confirmation: '12345678')
+	visit('/')
+	click_link('Sign up')
+	fill_in('Email', with: email)
+	fill_in('Password', with: password)
+	fill_in('Password confirmation', with: password_confirmation)
+	click_button('Sign up')
+end  
